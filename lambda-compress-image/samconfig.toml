@@ -1,0 +1,10 @@
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "lambda-image-processor"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+s3_bucket = "sam-deployment-825765422669"
+s3_prefix = "lambda-image-processor"
+resolve_s3 = false
+image_repositories = []

@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lambda que procesa imágenes de S3 y las guarda comprimidas
+
+Resources:
+
+  UploadedImagesBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: uploaded-images-825765422669
+
+  ProcessedImagesBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: processed-images-825765422669
+
+  CompressImageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: app.lambdaHandler
+      Runtime: nodejs18.x
+      MemorySize: 256
+      Timeout: 10
+      Policies:
+        - S3ReadPolicy:
+            BucketName: uploaded-images-825765422669
+        - S3WritePolicy:
+            BucketName: processed-images-825765422669
+
+Outputs:
+  UploadsBucketName:
+    Value: !Ref UploadedImagesBucket
+  ProcessedBucketName:
+    Value: !Ref ProcessedImagesBucket
